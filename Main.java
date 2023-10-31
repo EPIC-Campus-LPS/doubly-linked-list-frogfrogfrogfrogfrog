@@ -5,9 +5,10 @@ public class Main {
         list.add(1);
         list.add(2);
         list.add(3);
-        list.add(10239812);
-        list.remove(2);
-
+        list.add(4);
+        list.set(3,120398);
+        list.remove();
         System.out.println(list);
+
     }
 }

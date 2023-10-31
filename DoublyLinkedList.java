@@ -100,8 +100,44 @@ public class DoublyLinkedList<E> {
 
         public E remove(){
 
+            //creates a new node that starts at the tail
+            Node<E> deletedElement = tail;
 
+            //makes a node that's the previous element before the tail;
+            Node<E> previous = tail.getPrevious();
 
+            //makes the original tail point to nothing
+            deletedElement.setNext(null);
+            deletedElement.setPrevious(null);
+
+            //gives the previous element tail characteristics
+            previous.setNext(null);
+            tail = previous;
+
+            return deletedElement.getValue();
+        }
+
+        public E set(int index, E element){
+
+            //creates a new node that starts at the head
+            Node<E> indexed = head;
+
+            //counts up to the element at the indexed element
+            for (int i = 0; i < index; i++){
+
+                indexed = indexed.getNext();
+
+            }
+
+            System.out.println(indexed.getValue());
+
+            //makes a temporary node that stores the value of the indexed element
+            Node<E> temp = indexed;
+
+            //makes the indexed element the new value that's going to be set
+            indexed.setValue(element);
+
+            return temp.getValue();
         }
 
         public String toString() {
