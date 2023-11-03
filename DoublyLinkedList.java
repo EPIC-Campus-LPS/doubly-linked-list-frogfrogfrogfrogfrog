@@ -1,12 +1,22 @@
 import java.util.Arrays;
 
+/**
+ * This class implements a doubly linked list
+ *
+ * @author Cardin Nguyen
+ * @version 1.0, 11/3/2023
+ * @see Arrays
+ */
 public class DoublyLinkedList<E> {
 
     private Node<E> head;
     private Node<E> tail;
-
     private int size = 0;
 
+    /**
+     * adds an element to the tail of the linked list
+     * @param element
+     */
     public void add(E element) {
 
         Node<E> addedElement = new Node(element, null, null);
@@ -39,23 +49,32 @@ public class DoublyLinkedList<E> {
         size++;
     }
 
-        public void add (int index, E element){
+    /**
+     * adds an element at a certain index in the linked list
+     *
+     * @param index
+     * @param element
+     */
 
-            Node<E> addedElement = new Node(element, null, null);
+    public void add(int index, E element) {
 
-            //creates a new node that starts at the head
-            Node<E> previous = head;
+        Node<E> addedElement = new Node(element, null, null);
 
-            //counts up to the node before the indexed element
-            for (int i = 0; i < index-1; i++) {
+        //creates a new node that starts at the head
+        Node<E> previous = head;
 
-                previous = previous.getNext();
+        //counts up to the node before the indexed element
+        for (int i = 0; i < index - 1; i++) {
 
-            }
+            previous = previous.getNext();
+
+        }
+
+        //checks if previous itself is null
+        if (previous != null) {
 
             //checks if the indexed element is the tail
-
-            if (previous.getNext() != null){
+            if (previous.getNext() != null) {
 
                 //element that's where the index is
                 Node<E> temp = previous.getNext();
@@ -78,50 +97,89 @@ public class DoublyLinkedList<E> {
                 add(element);
 
             }
+
+        } else {
+
+            //uses the currently existing add method to add it to the end
+            add(element);
+
         }
+    }
 
-        public E remove(){
+    /**
+     * removes the tail of the linked list
+     *
+     * @return the deleted element (the tail)
+     */
 
-            //creates a new node that starts at the tail
-            Node<E> deletedElement = tail;
+    public E remove() {
 
-            //makes a node that's the previous element before the tail;
-            Node<E> previous = tail.getPrevious();
+        //checks if the list is going to be empty after remove method
+        if (size == 1) {
 
-            //makes the original tail point to nothing
-            deletedElement.setNext(null);
-            deletedElement.setPrevious(null);
+            Node<E> deletedElement = head;
 
-            //gives the previous element tail characteristics
-            previous.setNext(null);
-            tail = previous;
+            head = null;
+            tail = null;
 
             size--;
 
             return deletedElement.getValue();
         }
 
-        public E set(int index, E element){
+        //creates a new node that starts at the tail
+        Node<E> deletedElement = tail;
 
-            //creates a new node that starts at the head
-            Node<E> indexed = head;
+        //makes a node that's the previous element before the tail;
+        Node<E> previous = tail.getPrevious();
 
-            //counts up to the element at the indexed element
-            for (int i = 0; i < index; i++){
+        //makes the original tail point to nothing
+        deletedElement.setNext(null);
+        deletedElement.setPrevious(null);
 
-                indexed = indexed.getNext();
+        //gives the previous element tail characteristics
+        previous.setNext(null);
+        tail = previous;
 
-            }
+        size--;
 
-            //makes a temporary node that stores the value of the indexed element
-            Node<E> temp = indexed;
+        return deletedElement.getValue();
+    }
 
-            //makes the indexed element the new value that's going to be set
-            indexed.setValue(element);
+    /**
+     * sets an element in the linked list at a specific index
+     *
+     * @param index
+     * @param element
+     * @return
+     */
+    public E set(int index, E element) {
 
-            return temp.getValue();
+        //creates a new node that starts at the head
+        Node<E> indexed = head;
+
+        //counts up to the element at the indexed element
+        for (int i = 0; i < index; i++) {
+
+            indexed = indexed.getNext();
+
         }
 
+        //makes a temporary node that stores the value of the indexed element
+        Node<E> temp = indexed;
+
+        //makes the indexed element the new value that's going to be set
+        indexed.setValue(element);
+
+        return temp.getValue();
+    }
+
+    /**
+     * removes an element in the linked tail at a specific index
+     *
+     * @param index
+     * @return the removed element at the index
+     */
     public E remove(int index) {
 
         //creates a new node that starts at the head
@@ -134,52 +192,65 @@ public class DoublyLinkedList<E> {
 
         }
 
-        //checks if your deleting at the end of the list
-        if (previous.getNext().getNext() != null){
+        //checks if the node after previous is null
+        if (previous.getNext() != null) {
 
-            System.out.println(previous.getValue());
+            //checks if your deleting at the end of the list
+            if (previous.getNext().getNext() != null) {
 
-            //creates a new node that's after the indexed element
-            Node<E> temp = previous.getNext();
+                System.out.println(previous.getValue());
 
-            //points the previous node to the node after the indexed element
-            previous.setNext(temp.getNext());
+                //creates a new node that's after the indexed element
+                Node<E> temp = previous.getNext();
 
-            //points the node after the indexed element to the previous node
-            temp.getNext().setPrevious(previous);
+                //points the previous node to the node after the indexed element
+                previous.setNext(temp.getNext());
 
-            //makes the indexed element point to nothing
-            temp.setNext(null);
-            temp.setPrevious(null);
+                //points the node after the indexed element to the previous node
+                temp.getNext().setPrevious(previous);
 
-            size--;
+                //makes the indexed element point to nothing
+                temp.setNext(null);
+                temp.setPrevious(null);
 
-            return temp.getValue();
+                size--;
+
+                return temp.getValue();
+
+            } else {
+
+                //uses the existing remove method to remove from the tail
+                remove();
+
+            }
 
         } else {
 
             //uses the existing remove method to remove from the tail
             remove();
-
         }
 
         return previous.getValue();
 
     }
 
-        public String toString() {
+    /**
+     * Turns the linked list as a readable string
+     * @return the linked list as a string
+     */
 
-            System.out.println(size);
-            Node<E> current = head;
-            String[] list = new String[size];
+    public String toString() {
 
-            for (int i = 0; i < size; i++) {
+        Node<E> current = head;
+        String[] list = new String[size];
 
-                list[i] = String.valueOf(current.getValue());
-                current = current.getNext();
+        for (int i = 0; i < size; i++) {
 
-            }
+            list[i] = String.valueOf(current.getValue());
+            current = current.getNext();
 
-            return Arrays.toString(list);
         }
+
+        return Arrays.toString(list);
     }
+}

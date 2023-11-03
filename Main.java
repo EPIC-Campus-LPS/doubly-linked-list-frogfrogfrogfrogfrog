@@ -26,5 +26,17 @@ public class Main {
         //tests the set method
         list.set(1,2); //12
         System.out.println(list);
+
+        //tests some empty list test cases
+        list.remove(); //1
+        list.remove(); //nothing
+        System.out.println(list);
+        list.add(0,1);
+        list.add(2);
+        list.add(4);
+        list.remove(0);
+        list.remove(0);
+        list.set(0,123);
+        System.out.println(list);
     }
 }
